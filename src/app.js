@@ -1,5 +1,11 @@
-const palos = ["heart", "diamond", "spade", "club"];
-const valores = [
+import "bootstrap";
+import "./styles.css";
+
+import "./assets/img/rigo-baby.jpg";
+import "./assets/img/4geeks.ico";
+
+let cardNumber = [
+  "A",
   "2",
   "3",
   "4",
@@ -11,42 +17,32 @@ const valores = [
   "10",
   "J",
   "Q",
-  "K",
-  "A"
+  "K"
 ];
+let palos = ["♥", "♦", "♠", "♣"];
 
-function generarCarta() {
-  const paloAleatorio = palos[Math.floor(Math.random() * palos.length)];
+window.onload = function() {
+  let suit = ["Diamonds", "Spades", "Hearts", "Clubs"];
+  let randomCardNumber = Math.floor(Math.random() * cardNumber.length);
+  let randomSuitNumber = Math.floor(Math.random() * suit.length);
+  let finalSuit = suit[randomSuitNumber];
 
-  const valorAleatorio = valores[Math.floor(Math.random() * valores.length)];
+  document.getElementById("cardContent").innerHTML =
+    cardNumber[randomCardNumber];
+  document.getElementById("theCard").className = "";
+  document.getElementById("theCard").classList.add("card");
+  document.getElementById("theCard").classList.add(getSuiteClass(finalSuit));
+};
 
-  const cardContainer = document.querySelector("#card-container .card");
-
-  cardContainer.classList.remove(...palos);
-  cardContainer.classList.add(paloAleatorio);
-
-  cardContainer.innerHTML = `${valorAleatorio} ${obtenerSimbolo(
-    paloAleatorio
-  )}`;
-}
-
-function obtenerSimbolo(palo) {
-  switch (palo) {
-    case "heart":
-      return "♥";
-    case "diamond":
-      return "♦";
-    case "spade":
-      return "♠";
-    case "club":
-      return "♣";
+function getSuiteClass(suit) {
+  switch (suit) {
+    case "Diamonds":
+      return "suit-diamonds";
+    case "Spades":
+      return "suit-spades";
+    case "Hearts":
+      return "suit-hearts";
+    case "Clubs":
+      return "suit-clubs";
   }
 }
-
-document
-  .getElementById("new-card-button")
-  .addEventListener("click", generarCarta);
-
-window.onload = generarCarta;
-
-setInterval(generarCarta, 10000);
